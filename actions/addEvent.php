@@ -3,10 +3,10 @@
 require_once '../config/config.php';
 require_once '../config/auth.php';
 
-if (isset($_POST['timestart']) and isset($_POST['timeend']) and isset($_POST['service'])) {
+if (isset($_POST['date_id']) and isset($_POST['slot'])) {
 
-    $stmt = $db->prepare("INSERT INTO events (user, service, timestart, timeend, notice) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param('iissi', $_SESSION['user_id'], $_POST['service'], $_POST['timestart'], $_POST['timeend'], $_POST['notice']);
+    $stmt = $db->prepare("INSERT INTO events (user, service, date_id, slot, notice) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param('iisii', $_SESSION['user_id'], $_POST['service'], $_POST['date_id'], $_POST['slot'], $_POST['notice']);
 
     try {
         if ($stmt->execute()) {

@@ -1,9 +1,13 @@
 <?php
 
 require_once '../config/config.php';
+session_start();
 
-if (isset($_POST['email']) and isset($_POST['password']) and isset($_POST['firstname']) and
-    isset($_POST['surname']) and isset($_POST['phone'])) {
+if (isset($_POST['email']) and $_POST['email'] != ""
+    and isset($_POST['password']) and $_POST['password'] != ""
+    and isset($_POST['firstname']) and $_POST['firstname'] != ""
+    and isset($_POST['surname']) and $_POST['surname'] != ""
+    and isset($_POST['phone']) and $_POST['phone'] != "") {
 
     $pwd = _hash($_POST['password']);
 
@@ -12,6 +16,7 @@ if (isset($_POST['email']) and isset($_POST['password']) and isset($_POST['first
 
     try {
         if ($stmt->execute() and mysqli_stmt_affected_rows($stmt) > 0) {
+            $_SESSION['user_id'] = mysqli_stmt_insert_id($stmt);
             echo json_encode([
                 'status' => 1
             ]);
